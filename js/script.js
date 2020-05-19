@@ -31,12 +31,12 @@ window.addEventListener('DOMContentLoaded', () => {
         menu1.classList.remove('operation_active');
     });
 
-    menuItem.forEach(item => {
+    /* menuItem.forEach(item => {
         item.addEventListener('click', () => {
             account.classList.toggle('account_active');
             menu.classList.toggle('accounting_active');
         }) 
-})
+}) */
 })
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -53,10 +53,10 @@ window.addEventListener('DOMContentLoaded', () => {
         menu2.classList.remove('accounting_active');
     });
 
-    menuItem.forEach(item => {
+    /* menuItem.forEach(item => {
         item.addEventListener('click', () => {
             oper.classList.toggle('oper_active');
             menu.classList.toggle('operation_active');
         })
-    })
+    }) */
 })
