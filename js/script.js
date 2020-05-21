@@ -22,6 +22,8 @@ window.addEventListener('DOMContentLoaded', () => {
     account = document.querySelector('.account');
     const menu1 = document.querySelector('.operation_list'),
     oper = document.querySelector('.oper');
+    hrr = document.querySelector('.hrr');
+    const menu3 = document.querySelector('.hr_list');
     
 
     account.addEventListener('click', () => {
@@ -29,6 +31,8 @@ window.addEventListener('DOMContentLoaded', () => {
         menu.classList.toggle('accounting_active');
         oper.classList.remove('oper_active');
         menu1.classList.remove('operation_active');
+        hrr.classList.remove('hrr_active');
+        menu3.classList.remove('hr_active');
     });
 
     /* menuItem.forEach(item => {
@@ -45,13 +49,37 @@ window.addEventListener('DOMContentLoaded', () => {
     oper = document.querySelector('.oper');
     const menu2 = document.querySelector('.accounting_list'),
     account = document.querySelector('.account');
+    hrr = document.querySelector('.hrr');
+    const menu3 = document.querySelector('.hr_list');
 
     oper.addEventListener('click', () => {
         oper.classList.toggle('oper_active');
         menu.classList.toggle('operation_active');
         account.classList.remove('account_active');
         menu2.classList.remove('accounting_active');
+        hrr.classList.remove('hrr_active');
+        menu3.classList.remove('hr_active');
     });
+})
+
+window.addEventListener('DOMContentLoaded', () => {
+    const menu = document.querySelector('.hr_list'),
+    menuItem = document.querySelectorAll('.hr_item'),
+    hrr = document.querySelector('.hrr');
+    const menu2 = document.querySelector('.accounting_list'),
+    account = document.querySelector('.account');
+    const menu1 = document.querySelector('.operation_list'),
+    oper = document.querySelector('.oper');
+
+    hrr.addEventListener('click', () => {
+        hrr.classList.toggle('hrr_active');
+        menu.classList.toggle('hr_active');
+        account.classList.remove('account_active');
+        menu2.classList.remove('accounting_active');
+        oper.classList.remove('oper_active');
+        menu1.classList.remove('operation_active');
+    });
+})
 
     /* menuItem.forEach(item => {
         item.addEventListener('click', () => {
@@ -59,4 +87,4 @@ window.addEventListener('DOMContentLoaded', () => {
             menu.classList.toggle('operation_active');
         })
     }) */
-})
+/* }) */
