@@ -1,122 +1,157 @@
-$(document).ready(function(){
-    $('.carousel__inner').slick({
-        speed: 1200,
-        adaptiveHeight: true,
-        prevArrow: '<button type="button" class="slick-prev"><img src="icons/red_arrow.svg"></button>',
-        nextArrow: '<button type="button" class="slick-next"><img src="icons/right_arrow.svg"></button>',
-        responsive: [
-            {
-                breakpoint: 768,
-                settings: {
-                    dots: true,
-                    arrows: false
-                }   
-                
-            }
-        ] 
-      });
+/* window.addEventListener('DOMContentLoaded', () => {
+    const menu = document.querySelector('.login_menu'),
+    menuItem = document.querySelectorAll('.menu_item'),
+    hamburger = document.querySelector('.hamburger');
 
-      $('ul.catalog__tabs').on('click', 'li:not(.catalog__tab_active)', function() {
-        $(this)
-          .addClass('catalog__tab_active').siblings().removeClass('catalog__tab_active')
-          .closest('div.container').find('div.catalog__content').removeClass('catalog__content_active').eq($(this).index()).addClass('catalog__content_active');
-      });
-
-      function toggleClass(item){
-        $(item).each(function(i){
-            $(this).on('click', function(e){
-                e.preventDefault();
-                $('.catalog-item__content').eq(i).toggleClass('catalog-item__content_active');
-                $('.catalog-item__list').eq(i).toggleClass('catalog-item__list_active');
-            })
-          })
-      };
-
-        toggleClass('.catalog-item__link');
-        toggleClass('.catalog-item__back');
-
-     //Modal
-      $('[data-modal=consultation]').on('click', function(){
-        $('.overlay, #consultation').fadeIn('slow');
-      });
-
-      $('.modal__close').on('click', function(){
-        $('.overlay, #consultation, #thanks, #order').fadeOut('slow');
-      });
-
-      $('.button_mini').each(function(i){
-        $(this).on('click', function(){
-          $('#order .modal__descr').text($('.catalog-item__subtitle').eq(i).text());
-          $('.overlay, #order').fadeIn('slow'); 
+    menuItem.forEach(item => {
+        item.addEventListener('click', () => {
+            hamburger.classList.toggle('hamburger_active');
+            menu.classList.toggle('menu_active');
         })
-      });
+    })
+}) */
 
-      function validateForm(form){
-        $(form).validate({
-          rules:{
-            name: {
-                required: true,
-                minlength: 2
-            },
-            phone: "required",
-            email: {
-              required: true,
-              email: true
-            }
-          },
-          messages: {
-            name: 
-            {
-              required: "Пожалуйста, введите своё имя",
-              minlength: jQuery.validator.format("Введите {0} символов!")
-            },
-            phone: "Введите свой номер телефона",
-            email: {
-              required: "Пожалуйста, введите свою почту",
-              email: "Неправильна введена почта"
-            }
-          }
-        });
-      }
+window.addEventListener('DOMContentLoaded', () => {
+    const menu = document.querySelector('.accounting_list'),
+    menuItem = document.querySelectorAll('.accounting_item'),
+    account = document.querySelector('.account');
+    const menu1 = document.querySelector('.operation_list'),
+    oper = document.querySelector('.oper');
+    const hrr = document.querySelector('.hrr');
+    const menu3 = document.querySelector('.hr_list');
+    const menu4 = document.querySelector('.settings_list'),
+    set = document.querySelector('.set');
+    const menu5 = document.querySelector('.account_list'),
+    acc = document.querySelector('.acc');
+    
 
-      validateForm('#order form');
-      validateForm('#consultation form');
-      validateForm('#consultation-form');
+    account.addEventListener('click', () => {
+        account.classList.toggle('account_active');
+        menu.classList.toggle('accounting_active');
+        oper.classList.remove('oper_active');
+        menu1.classList.remove('operation_active');
+        hrr.classList.remove('hrr_active');
+        menu3.classList.remove('hr_active');
+        set.classList.remove('set_active');
+        menu4.classList.remove('settings_active');
+        acc.classList.remove('acc_active');
+        menu5.classList.remove('act_active');
+    });
+})
 
-      $('input[name=phone]').mask("+7 (999) 999-99-99");
+window.addEventListener('DOMContentLoaded', () => {
+    const menu = document.querySelector('.operation_list'),
+    menuItem = document.querySelectorAll('.operation_item'),
+    oper = document.querySelector('.oper');
+    const menu2 = document.querySelector('.accounting_list'),
+    account = document.querySelector('.account');
+    const hrr = document.querySelector('.hrr');
+    const menu3 = document.querySelector('.hr_list');
+    const menu4 = document.querySelector('.settings_list'),
+    set = document.querySelector('.set');
+    const menu5 = document.querySelector('.account_list'),
+    acc = document.querySelector('.acc');
 
-      $('form').submit(function(e) {
-        e.preventDefault();
-        $.ajax({
-          type: "POST",
-          url: "mailer/smart.php",
-          data: $(this).serialize()
-        }).done(function() {
-          $(this).find("input").val("");
-          $('#consultation, #order').fadeOut('slow');
-          $('#thanks. .overlay').fadeIn('slow');
-          $('form').trigger('reset');
-        });
-        return false;
-      });
+    oper.addEventListener('click', () => {
+        oper.classList.toggle('oper_active');
+        menu.classList.toggle('operation_active');
+        account.classList.remove('account_active');
+        menu2.classList.remove('accounting_active');
+        hrr.classList.remove('hrr_active');
+        menu3.classList.remove('hr_active');
+        set.classList.remove('set_active');
+        menu4.classList.remove('settings_active');
+        acc.classList.remove('acc_active');
+        menu5.classList.remove('act_active');
+    });
+})
 
-      //Smooth scroll and pageup
+window.addEventListener('DOMContentLoaded', () => {
+    const menu5 = document.querySelector('.account_list'),
+    menuItem = document.querySelectorAll('.account_item'),
+    acc = document.querySelector('.acc');
+    const menu4 = document.querySelector('.settings_list'),
+    set = document.querySelector('.set');
+    const menu2 = document.querySelector('.accounting_list'),
+    account = document.querySelector('.account');
+    const hrr = document.querySelector('.hrr');
+    const menu3 = document.querySelector('.hr_list');
+    const menu1 = document.querySelector('.operation_list'),
+    oper = document.querySelector('.oper');
 
-      $(window).scroll(function(){
-        if ($(this).scrollTop() > 1400) {
-          $('.pageup').fadeIn('slow');
-        } else {
-          $('.pageup').fadeOut('slow');
-        }
+    acc.addEventListener('click', () => {
+        acc.classList.toggle('acc_active');
+        menu5.classList.toggle('act_active');
+        set.classList.remove('set_active');
+        menu4.classList.remove('settings_active');
+        account.classList.remove('account_active');
+        menu2.classList.remove('accounting_active');
+        hrr.classList.remove('hrr_active');
+        menu3.classList.remove('hr_active');
+        oper.classList.remove('oper_active');
+        menu1.classList.remove('operation_active');
+    });
+})
 
-        $("a[href=#up]").click(function(){
-          const _href = $(this).attr("href");
-          $("html, body").animate({scrollTop: $(_href).offset().top+"px"});
-          return false;
-        });
+window.addEventListener('DOMContentLoaded', () => {
+    const menu4 = document.querySelector('.settings_list'),
+    menuItem = document.querySelectorAll('.settings_item'),
+    set = document.querySelector('.set');
+    const menu2 = document.querySelector('.accounting_list'),
+    account = document.querySelector('.account');
+    const menu1 = document.querySelector('.operation_list'),
+    oper = document.querySelector('.oper');
+    const menu = document.querySelector('.hr_list'),
+    hrr = document.querySelector('.hrr');
+    const menu5 = document.querySelector('.account_list'),
+    acc = document.querySelector('.acc');
 
-      });
+    set.addEventListener('click', () => {
+        set.classList.toggle('set_active');
+        menu4.classList.toggle('settings_active');
+        account.classList.remove('account_active');
+        menu2.classList.remove('accounting_active');
+        oper.classList.remove('oper_active');
+        menu1.classList.remove('operation_active');
+        hrr.classList.remove('hrr_active');
+        menu.classList.remove('hr_active');
+        acc.classList.remove('acc_active');
+        menu5.classList.remove('act_active');
+    });
+})
 
-      new WOW().init();
+window.addEventListener('DOMContentLoaded', () => {
+    const menu = document.querySelector('.hr_list'),
+    menuItem = document.querySelectorAll('.hr_item'),
+    hrr = document.querySelector('.hrr');
+    const menu2 = document.querySelector('.accounting_list'),
+    account = document.querySelector('.account');
+    const menu1 = document.querySelector('.operation_list'),
+    oper = document.querySelector('.oper');
+    const menu4 = document.querySelector('.settings_list'),
+    set = document.querySelector('.set');
+    const menu5 = document.querySelector('.account_list'),
+    acc = document.querySelector('.acc');
 
-  });
+    hrr.addEventListener('click', () => {
+        hrr.classList.toggle('hrr_active');
+        menu.classList.toggle('hr_active');
+        account.classList.remove('account_active');
+        menu2.classList.remove('accounting_active');
+        oper.classList.remove('oper_active');
+        menu1.classList.remove('operation_active');
+        set.classList.remove('set_active');
+        menu4.classList.remove('settings_active');
+        acc.classList.remove('acc_active');
+        menu5.classList.remove('act_active');
+    });
+})
+
+
+
+    /* menuItem.forEach(item => {
+        item.addEventListener('click', () => {
+            oper.classList.toggle('oper_active');
+            menu.classList.toggle('operation_active');
+        })
+    }) */
