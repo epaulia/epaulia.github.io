@@ -1,15 +1,4 @@
-/* window.addEventListener('DOMContentLoaded', () => {
-    const menu = document.querySelector('.login_menu'),
-    menuItem = document.querySelectorAll('.menu_item'),
-    hamburger = document.querySelector('.hamburger');
 
-    menuItem.forEach(item => {
-        item.addEventListener('click', () => {
-            hamburger.classList.toggle('hamburger_active');
-            menu.classList.toggle('menu_active');
-        })
-    })
-}) */
 
 window.addEventListener('DOMContentLoaded', () => {
     const menu = document.querySelector('.accounting_list'),
@@ -147,11 +136,32 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 })
 
+window.addEventListener('DOMContentLoaded', () =>{
+    let loginBtn = document.querySelector('.account__settings'),
+        Info = document.querySelector('.loggedin'),
+        descr = document.querySelector('.login__descr'),
+        closeIcon = document.querySelectorAll('i')[0];
 
+    loginBtn.addEventListener('mouseenter', function(){
+        Info.classList.toggle('info_active');
+    });
 
-    /* menuItem.forEach(item => {
-        item.addEventListener('click', () => {
-            oper.classList.toggle('oper_active');
-            menu.classList.toggle('operation_active');
-        })
-    }) */
+    loginBtn.addEventListener('mouseleave', function(){
+        Info.classList.remove('info_active');
+    });
+
+    loginBtn.addEventListener('click', function(){
+        descr.classList.toggle('descr_active');
+        Info.classList.remove('info_active');
+        if(descr.classList.contains('descr_active')){
+            closeIcon.className = 'fas fa-times-circle';
+        }else{
+            closeIcon.className = 'fas fa-sign-in-alt';
+        }
+        
+    });
+    
+})
+
+let descr = document.querySelector('.login__descr'),
+    closeIcon = document.querySelectorAll('i')[0];
