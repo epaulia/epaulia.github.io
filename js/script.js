@@ -163,5 +163,3 @@ window.addEventListener('DOMContentLoaded', () =>{
     
 })
 
-let descr = document.querySelector('.login__descr'),
-    closeIcon = document.querySelectorAll('i')[0];
