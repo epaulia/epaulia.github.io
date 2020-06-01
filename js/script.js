@@ -26,7 +26,7 @@ window.addEventListener('DOMContentLoaded', () => {
         acc.classList.remove('acc_active');
         menu5.classList.remove('act_active');
     });
-})
+});
 
 window.addEventListener('DOMContentLoaded', () => {
     const menu = document.querySelector('.operation_list'),
@@ -53,7 +53,7 @@ window.addEventListener('DOMContentLoaded', () => {
         acc.classList.remove('acc_active');
         menu5.classList.remove('act_active');
     });
-})
+});
 
 window.addEventListener('DOMContentLoaded', () => {
     const menu5 = document.querySelector('.account_list'),
@@ -80,7 +80,7 @@ window.addEventListener('DOMContentLoaded', () => {
         oper.classList.remove('oper_active');
         menu1.classList.remove('operation_active');
     });
-})
+});
 
 window.addEventListener('DOMContentLoaded', () => {
     const menu4 = document.querySelector('.settings_list'),
@@ -107,7 +107,7 @@ window.addEventListener('DOMContentLoaded', () => {
         acc.classList.remove('acc_active');
         menu5.classList.remove('act_active');
     });
-})
+});
 
 window.addEventListener('DOMContentLoaded', () => {
     const menu = document.querySelector('.hr_list'),
@@ -134,7 +134,7 @@ window.addEventListener('DOMContentLoaded', () => {
         acc.classList.remove('acc_active');
         menu5.classList.remove('act_active');
     });
-})
+});
 
 window.addEventListener('DOMContentLoaded', () =>{
     let loginBtn = document.querySelector('.account__settings'),
@@ -161,5 +161,5 @@ window.addEventListener('DOMContentLoaded', () =>{
         
     });
     
-})
+});
 
