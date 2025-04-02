@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>gRPC and LibTorch with Bazel | Eugene Paulia</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css">
+    <style>
+        :root {
+            --primary: #2a3b4c;
+            --secondary: #5d7a98;
+            --accent: #61dafb;
+            --light: #f5f8fa;
+            --dark: #1a1a2e;
+            --text: #333;
+            --text-light: #666;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Mona Sans, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        .blog-header {
+            position: relative;
+            height: 60vh;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background-color: var(--dark);
+        }
+        
+        #particles-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            max-width: 800px;
+            padding: 0 2rem;
+        }
+        
+        .blog-date {
+            font-size: 1rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+        
+        .blog-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        
+        .blog-author {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .blog-tags {
+            margin-top: 1.5rem;
+            display: flex;
+            gap: 0.75rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .blog-tag {
+            background-color: rgba(97, 218, 251, 0.2);
+            color: var(--accent);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .blog-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        
+        .blog-content p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: var(--text);
+        }
+        
+        .blog-content h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin: 3rem 0 1.5rem;
+            position: relative;
+        }
+        
+        .blog-content h3 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin: 2rem 0 1rem;
+        }
+        
+        .blog-content ul, .blog-content ol {
+            margin: 1.5rem 0;
+            padding-left: 2rem;
+        }
+        
+        .blog-content li {
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+        }
+        
+        code {
+            background-color: #f4f4f4;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'Fira Code', Mona Sans, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif;
+            font-size: 0.9em;
+        }
+        
+        pre {
+            background-color: #f8f8f8;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        pre code {
+            background-color: transparent;
+            padding: 0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        .back-to-home {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            z-index: 100;
+            background-color: white;
+            color: var(--primary);
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .back-to-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            color: var(--accent);
+        }
+        
+        @media (max-width: 768px) {
+            .blog-title {
+                font-size: 2.5rem;
+            }
+            
+            .blog-content {
+                padding: 2rem 1.5rem;
+            }
+            
+            .back-to-home {
+                top: 1rem;
+                left: 1rem;
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="../index.html#projects" class="back-to-home" id="back-link">
+        <i class="fas fa-arrow-left"></i>
+        Back to Projects
+    </a>
+    
+    <header class="blog-header">
+        <canvas id="particles-canvas"></canvas>
+        <div class="header-content">
+            <div class="blog-date">August 6, 2024</div>
+            <h1 class="blog-title">Forecasting + Anomaly Detection in Food Cost Per Manday</h1>
+            <div class="blog-author">by Eugene Paulia</div>
+            <div class="blog-tags">
+                <span class="blog-tag">ARIMA</span>
+                <span class="blog-tag">Anomaly Detection</span>
+                <span class="blog-tag">Cenovus</span>
+            </div>
+        </div>
+    </header>
+    
+    <article class="blog-content">
+        <p>I built a full data pipeline to forecast and detect anomalies in food cost per person per day ("per manday") across various work camps. The goal was to proactively flag spikes or unusual behavior in food costs, normalized by occupancy levels.</p>
+
+        <p>This solution integrates:</p>
+        <ul>
+            <li><strong>Invoice Data</strong> (daily food costs per camp)</li>
+            <li><strong>Loading Data</strong> (daily occupancy per camp)</li>
+        </ul>
+
+        <p>From these, I computed a normalized per-manday cost trend and applied a combination of statistical checks, anomaly logic, and ARIMA forecasting to flag past and future cost outliers.</p>
+
+        <hr>
+
+        <h2>Architecture Overview</h2>
+        <p>The pipeline I developed runs per camp and follows this sequence:</p>
+        <ol>
+            <li><strong>Data Loading</strong></li>
+            <li><strong>Manday Normalization</strong> (<code>cost / occupancy</code>)</li>
+            <li><strong>Stationarity Enforcement</strong> (ADF test + first differencing)</li>
+            <li><strong>Anomaly Detection</strong> on historical trends</li>
+            <li><strong>ARIMA Forecasting</strong> (5-day horizon)</li>
+            <li><strong>Anomaly Detection</strong> on predicted values</li>
+        </ol>
+        <p>Each module is fully modular and encapsulated, allowing for clean testing and flexible reuse.</p>
+
+        <hr>
+
+        <h2>Stationarity Enforcement via Recursive Differencing</h2>
+        <p>I began each time series by checking for stationarity using the <strong>Augmented Dickey-Fuller (ADF)</strong> test. This statistical test checks for the presence of a unit root in the series. The test statistic (0th element) and p-value (1st element) were central to my logic:</p>
+        <ul>
+            <li>If the <strong>p-value < 0.05</strong>, I rejected the null hypothesis and considered the data stationary.</li>
+            <li>I also validated that the test statistic fell below the critical values at standard confidence thresholds (10%, 5%, 1%).</li>
+        </ul>
+
+        <p>If the series failed this check, I applied <strong>first differencing</strong> to stabilize the mean and remove trends:</p>
+        <pre><code class="language-python">df_stationary = df.diff().dropna()</code></pre>
+
+        <p>This operation was applied recursively: after each differencing pass, I reran the ADF test. This allowed me to ensure that the differencing degree <code>d</code> in the ARIMA model was not chosen arbitrarily — I backed it up with empirical tests.</p>
+
+        <p>This recursive enforcement of stationarity was essential. Feeding a non-stationary series into ARIMA can lead to biased coefficients and unstable forecasts. By rigorously checking and transforming the input, I preserved model integrity.</p>
+
+        <hr>
+
+        <h2>Historical Anomaly Detection Logic</h2>
+        <p>With a stationary series in place, I ran anomaly detection logic on historical trends.</p>
+
+        <p>The idea was to compare <strong>recent values</strong> against a <strong>stable historical baseline</strong>. To compute this baseline, I:</p>
+        <ul>
+            <li>Calculated a <strong>10-day rolling mean</strong></li>
+            <li>Calculated a <strong>10-day rolling standard deviation</strong></li>
+            <li>Took the <strong>overall average</strong> of those rolling means and standard deviations</li>
+        </ul>
+
+        <p>This gave me two stable reference points. From there, I defined the anomaly bounds as:</p>
+        <pre><code class="language-python">upper_bound = overall_mean + threshold * overall_std
+lower_bound = overall_mean - threshold * overall_std</code></pre>
+        <p>where <code>threshold = 2</code> by default (i.e., 95.45% of values in a normal distribution).</p>
+
+        <p>But I didn't blindly apply that threshold. If the average rolling std exceeded the average mean — indicating high volatility or skew — I interpreted the series as too noisy for std-based flagging and skipped anomaly detection. This protected the system from over-flagging in turbulent data regimes.</p>
+
+        <p>If the thresholding condition was satisfied, I evaluated the <strong>last N days</strong> (configurable via <code>how_far</code>) and flagged any outliers beyond the defined range. These were surfaced as anomalies.</p>
+
+        <p>The final output was a filtered DataFrame of anomalies, enriched with contextual columns like the computed mean and std multiplier.</p>
+
+        <p><strong>Code snippet:</strong></p>
+        <pre><code class="language-python">rolling_means = historical_data['per_manday'].rolling(window).mean()
+rolling_stds = historical_data['per_manday'].rolling(window).std()
+overall_mean = rolling_means.mean()
+overall_std = rolling_stds.mean()
+
+if overall_std < overall_mean:
+    upper = overall_mean + threshold * overall_std
+    lower = overall_mean - threshold * overall_std
+    recent = df_after_check.iloc[-how_far:]
+    anomalies = recent[(recent['per_manday'] < lower) | (recent['per_manday'] > upper)]</code></pre>
+
+        <hr>
+
+        <h2>Forward Forecasting with Auto-ARIMA</h2>
+        <p>I extended the pipeline by predicting future behavior using ARIMA. I specifically used <strong>Auto-ARIMA</strong> (<code>pmdarima.auto_arima</code>) to avoid manual tuning.</p>
+
+        <p>The configuration was:</p>
+        <ul>
+            <li><code>start_p=0</code>, <code>max_p=5</code>, <code>max_q=5</code>, <code>max_d=2</code></li>
+            <li><code>seasonal=False</code> (since no strong weekly or monthly patterns were observed)</li>
+            <li><code>stepwise=True</code> for faster convergence</li>
+        </ul>
+
+        <p>I didn't just fit the model blindly. I split the time series into <strong>training and validation folds</strong> using <code>TimeSeriesSplit(n_splits=2)</code>. For each fold, I computed the <strong>mean squared error (MSE)</strong> between predicted and actual values. This provided tangible feedback on model accuracy.</p>
+
+        <p>After tuning, I forecasted the <strong>next 5 days</strong>, along with <strong>confidence intervals</strong>. I generated synthetic timestamps for the next 5 days and merged the predictions into the historical timeline for a unified view.</p>
+
+        <p><strong>Code snippet:</strong></p>
+        <pre><code class="language-python">ts = TimeSeriesSplit(n_splits=2)
+for train_idx, test_idx in ts.split(daily_data['per_manday']):
+    train, test = daily_data['per_manday'][train_idx], daily_data['per_manday'][test_idx]
+    model = pm.auto_arima(train, seasonal=False, stepwise=True)
+    forecast = model.predict(n_periods=len(test))
+
+forecasts = model.predict(n_periods=days_predict)</code></pre>
+
+        <p>This gave me a projected view of future costs — ready for downstream analysis.</p>
+
+        <hr>
+
+        <h2>Future Anomaly Detection</h2>
+        <p>Once the forecast was appended to the timeline, I re-applied the anomaly detection logic to the forecasted segment only.</p>
+
+        <p>This reused the same global bounds (mean ± <code>X × std</code>) calculated earlier. The idea here was consistency — the same criteria used to judge past anomalies would be used to judge future ones.</p>
+
+        <p>By doing this, I enabled <strong>forward-looking anomaly detection</strong>. If the model predicted a spike outside the acceptable range, the system flagged it as a <strong>future anomaly</strong>, which could then trigger alerts or follow-ups.</p>
+
+        <p>This part of the architecture transforms the system from a retrospective dashboard into a proactive risk detection tool.</p>
+
+        <hr>
+
+        <h2>Design Highlights</h2>
+        <ul>
+            <li><strong>Recursive ADF-Driven Differencing</strong>: I didn't guess the differencing parameter. I tested for it, recursively enforced it, and ensured statistical validity before modeling.</li>
+            <li><strong>Dynamic Anomaly Thresholding</strong>: I computed rolling means/stdevs, then averaged them to build stable reference points. I adapted the detection logic dynamically based on volatility.</li>
+            <li><strong>Forecast Integration</strong>: I carefully aligned the forecast with the historical timeline and treated predicted values as first-class citizens for anomaly detection.</li>
+            <li><strong>Cross-Validation for Time Series</strong>: I used time-aware splits to validate model accuracy and avoid overfitting.</li>
+            <li><strong>Camp-Level Isolation</strong>: Every camp had its own pipeline instance, allowing for independent forecasting, anomaly bounds, and exception management.</li>
+            <li><strong>Configurable Thresholding and Lookahead</strong>: Thresholds (<code>X</code>) and prediction horizons (<code>N</code>) were modular and easily tunable for experimentation.</li>
+        </ul>
+
+        <hr>
+
+        <h2>Key Learnings & Reflections</h2>
+        <p>This project was a deep dive into applied time series forecasting and anomaly detection. It showcases my ability to:</p>
+        <ul>
+            <li>Design end-to-end analytical systems</li>
+            <li>Implement statistical tests and transformation logic</li>
+            <li>Tune, evaluate, and deploy classical models</li>
+            <li>Build pipelines that are explainable, modular, and production-ready</li>
+        </ul>
+
+    </article>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script>
+        // Check referrer and update back link
+        document.addEventListener('DOMContentLoaded', function() {
+            const referrer = document.referrer;
+            const backLink = document.getElementById('back-link');
+            
+            if (referrer.includes('all-projects.html')) {
+                backLink.href = 'all-projects.html';
+            }
+        });
+
+        // Particle system animation
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Set canvas size
+        function resizeCanvas() {
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+        }
+        
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+        
+        // Particle class
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = Math.random() * 0.2 - 0.1;
+                this.vy = Math.random() * 0.2 - 0.1;
+                this.radius = Math.random() * 2 + 1;
+                this.opacity = Math.random() * 0.5 + 0.2;
+            }
+            
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+            
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(97, 218, 251, ${this.opacity})`;
+                ctx.fill();
+            }
+        }
+        
+        // Create particles
+        const particles = Array.from({ length: 100 }, () => new Particle());
+        
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+            
+            // Draw connections
+            particles.forEach((p1, i) => {
+                particles.slice(i + 1).forEach(p2 => {
+                    const dx = p1.x - p2.x;
+                    const dy = p1.y - p2.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < 100) {
+                        ctx.beginPath();
+                        ctx.moveTo(p1.x, p1.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.strokeStyle = `rgba(97, 218, 251, ${0.2 * (1 - distance / 100)})`;
+                        ctx.stroke();
+                    }
+                });
+            });
+        }
+        
+        animate();
+    </script>
+</body>
+</html> 
