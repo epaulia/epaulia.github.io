@@ -266,7 +266,12 @@
         
         /* Canvas for Three.js */
         #hero-canvas {
-            background: red !important;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
         }
         
         /* About Section */
@@ -479,184 +484,99 @@
         
         /* Skills Section */
         .skills-container {
+            position: relative;
+            height: 500px;
             margin-top: 2rem;
-            background-color: white;
-            border-radius: 15px;
+            background-color: rgba(245, 248, 250, 0.7);
+            border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
             overflow: hidden;
-            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
-        /* Desktop View - Interactive Nodes */
-        @media (min-width: 769px) {
-            .skills-container {
-                height: 600px;
-            }
-            
-            .skills-accordion {
-                display: none;
-            }
+        #skills-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
         }
         
-        /* Mobile View - Accordion */
-        @media (max-width: 768px) {
-            #skills-canvas {
-                display: none;
-            }
-            
-            .skills-accordion {
-                display: flex;
-                flex-direction: column;
-                gap: 1rem;
-                padding: 1.5rem;
-            }
-            
-            .skill-category {
-                background-color: #fff;
-                border-radius: 10px;
-                overflow: hidden;
-                transition: all 0.3s ease;
-                border: 1px solid #eee;
-            }
-            
-            .category-header {
-                display: flex;
-                align-items: center;
-                padding: 1.25rem;
-                background-color: #f8f9fa;
-                cursor: pointer;
-                transition: all 0.3s ease;
-            }
-            
-            .category-header:hover {
-                background-color: #f1f3f5;
-            }
-            
-            .category-header i {
-                font-size: 1.5rem;
-                margin-right: 1rem;
-                color: var(--accent);
-                transition: all 0.3s ease;
-            }
-            
-            .category-header h3 {
-                margin: 0;
-                flex-grow: 1;
-                font-size: 1.2rem;
-                color: var(--primary);
-            }
-            
-            .toggle-icon {
-                font-size: 1.5rem;
-                color: var(--accent);
-                transition: transform 0.3s ease;
-            }
-            
-            .skill-category.active .toggle-icon {
-                transform: rotate(45deg);
-            }
-            
-            .category-content {
-                max-height: 0;
-                overflow: hidden;
-                transition: max-height 0.3s ease-out;
-            }
-            
-            .skill-category.active .category-content {
-                max-height: 1000px;
-                transition: max-height 0.5s ease-in;
-            }
-            
-            .skill-item {
-                padding: 1.25rem;
-                border-top: 1px solid #eee;
-                opacity: 0;
-                transform: translateY(20px);
-                transition: all 0.3s ease;
-            }
-            
-            .skill-category.active .skill-item {
-                opacity: 1;
-                transform: translateY(0);
-            }
-            
-            .skill-info {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                margin-bottom: 0.75rem;
-            }
-            
-            .skill-info h4 {
-                margin: 0;
-                font-size: 1.1rem;
-                color: var(--primary);
-            }
-            
-            .skill-level {
-                font-size: 0.9rem;
-                color: var(--accent);
-                font-weight: 500;
-            }
-            
-            .skill-bar {
-                height: 6px;
-                background-color: #f1f3f5;
-                border-radius: 3px;
-                overflow: hidden;
-                margin-bottom: 0.75rem;
-            }
-            
-            .skill-progress {
-                height: 100%;
-                background-color: var(--accent);
-                border-radius: 3px;
-                width: 0;
-                transition: width 1s ease;
-            }
-            
-            .skill-description {
-                font-size: 0.95rem;
-                color: var(--text-light);
-                margin: 0;
-            }
+        .skills-legend {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 2;
+            max-height: 80vh;
+            overflow-y: auto;
         }
         
-        /* Category-specific colors */
-        .skill-category[data-category="Languages"] .category-header i {
-            color: #fdaceb;
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 4px 8px;
+            border-radius: 4px;
         }
         
-        .skill-category[data-category="Machine Learning"] .category-header i {
-            color: #ff6b6b;
+        .legend-item:hover {
+            background-color: rgba(0, 0, 0, 0.05);
         }
         
-        .skill-category[data-category="GenAI"] .category-header i {
-            color: #acebfd;
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+            border: 2px solid rgba(0, 0, 0, 0.1);
         }
         
-        .skill-category[data-category="DevOps"] .category-header i {
-            color: #acfdbe;
+        .legend-item span {
+            font-size: 0.9rem;
+            color: var(--text);
         }
         
-        .skill-category[data-category="Platforms"] .category-header i {
-            color: #ebfdac;
+        .skill-info-panel {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            opacity: 0.8;
+            transform: translateY(5px);
         }
         
-        .skill-category[data-category="NLP"] .category-header i {
-            color: #beacfd;
+        .skill-info-panel:hover {
+            opacity: 1;
+            transform: translateY(0);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
         }
         
-        .skill-category[data-category="Tools"] .category-header i {
-            color: #fde7ac;
+        .skill-info-panel h3 {
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-size: 1.1rem;
         }
         
-        /* Animation delays for skill items */
-        .skill-category.active .skill-item:nth-child(1) { transition-delay: 0.1s; }
-        .skill-category.active .skill-item:nth-child(2) { transition-delay: 0.2s; }
-        .skill-category.active .skill-item:nth-child(3) { transition-delay: 0.3s; }
-        .skill-category.active .skill-item:nth-child(4) { transition-delay: 0.4s; }
-        .skill-category.active .skill-item:nth-child(5) { transition-delay: 0.5s; }
+        .skill-info-panel .skill-description {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
         
         /* Projects Section */
         .projects-grid {
@@ -1384,129 +1304,35 @@
         <div class="container">
             <h2>Technical Skills</h2>
             <div class="skills-container">
-                <div class="skills-accordion">
-                    <!-- Languages Category -->
-                    <div class="skill-category" data-category="Languages">
-                        <div class="category-header">
-                            <i class="fas fa-code"></i>
-                            <h3>Languages</h3>
-                            <span class="toggle-icon">+</span>
-                        </div>
-                        <div class="category-content">
-                            <div class="skill-item" data-level="95">
-                                <div class="skill-info">
-                                    <h4>Python</h4>
-                                    <span class="skill-level">Expert</span>
-                                </div>
-                                <div class="skill-bar">
-                                    <div class="skill-progress"></div>
-                                </div>
-                                <p class="skill-description">Expert level, daily use for ML pipelines and data analysis</p>
-                            </div>
-                            <div class="skill-item" data-level="85">
-                                <div class="skill-info">
-                                    <h4>SQL</h4>
-                                    <span class="skill-level">Advanced</span>
-                                </div>
-                                <div class="skill-bar">
-                                    <div class="skill-progress"></div>
-                                </div>
-                                <p class="skill-description">Complex queries, database optimization, ETL processes</p>
-                            </div>
-                        </div>
+                <canvas id="skills-canvas"></canvas>
+                <div class="skills-legend">
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #fdaceb;"></div>
+                        <span>Languages</span>
                     </div>
-
-                    <!-- Machine Learning Category -->
-                    <div class="skill-category" data-category="Machine Learning">
-                        <div class="category-header">
-                            <i class="fas fa-brain"></i>
-                            <h3>Machine Learning</h3>
-                            <span class="toggle-icon">+</span>
-                        </div>
-                        <div class="category-content">
-                            <div class="skill-item" data-level="90">
-                                <div class="skill-info">
-                                    <h4>PyTorch</h4>
-                                    <span class="skill-level">Expert</span>
-                                </div>
-                                <div class="skill-bar">
-                                    <div class="skill-progress"></div>
-                                </div>
-                                <p class="skill-description">Deep learning models for NLP and time series analysis</p>
-                            </div>
-                            <div class="skill-item" data-level="85">
-                                <div class="skill-info">
-                                    <h4>TensorFlow</h4>
-                                    <span class="skill-level">Advanced</span>
-                                </div>
-                                <div class="skill-bar">
-                                    <div class="skill-progress"></div>
-                                </div>
-                                <p class="skill-description">Production ML systems and model deployment</p>
-                            </div>
-                        </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #ff6b6b;"></div>
+                        <span>Machine Learning</span>
                     </div>
-
-                    <!-- GenAI Category -->
-                    <div class="skill-category" data-category="GenAI">
-                        <div class="category-header">
-                            <i class="fas fa-robot"></i>
-                            <h3>GenAI</h3>
-                            <span class="toggle-icon">+</span>
-                        </div>
-                        <div class="category-content">
-                            <div class="skill-item" data-level="90">
-                                <div class="skill-info">
-                                    <h4>LangChain</h4>
-                                    <span class="skill-level">Expert</span>
-                                </div>
-                                <div class="skill-bar">
-                                    <div class="skill-progress"></div>
-                                </div>
-                                <p class="skill-description">Framework for LLM application development</p>
-                            </div>
-                            <div class="skill-item" data-level="90">
-                                <div class="skill-info">
-                                    <h4>LLM API Orchestration</h4>
-                                    <span class="skill-level">Expert</span>
-                                </div>
-                                <div class="skill-bar">
-                                    <div class="skill-progress"></div>
-                                </div>
-                                <p class="skill-description">Building multi-provider model wrappers and API interfaces</p>
-                            </div>
-                        </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #ebfdac;"></div>
+                        <span>Platforms</span>
                     </div>
-
-                    <!-- DevOps Category -->
-                    <div class="skill-category" data-category="DevOps">
-                        <div class="category-header">
-                            <i class="fas fa-server"></i>
-                            <h3>DevOps</h3>
-                            <span class="toggle-icon">+</span>
-                        </div>
-                        <div class="category-content">
-                            <div class="skill-item" data-level="85">
-                                <div class="skill-info">
-                                    <h4>Docker</h4>
-                                    <span class="skill-level">Advanced</span>
-                                </div>
-                                <div class="skill-bar">
-                                    <div class="skill-progress"></div>
-                                </div>
-                                <p class="skill-description">Containerization for reproducible environments</p>
-                            </div>
-                            <div class="skill-item" data-level="80">
-                                <div class="skill-info">
-                                    <h4>Kubernetes</h4>
-                                    <span class="skill-level">Advanced</span>
-                                </div>
-                                <div class="skill-bar">
-                                    <div class="skill-progress"></div>
-                                </div>
-                                <p class="skill-description">Orchestration for scalable ML systems</p>
-                            </div>
-                        </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #acfdbe;"></div>
+                        <span>DevOps</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #acebfd;"></div>
+                        <span>GenAI</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #beacfd;"></div>
+                        <span>NLP</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #fde7ac;"></div>
+                        <span>Tools</span>
                     </div>
                 </div>
             </div>
@@ -2663,93 +2489,6 @@
                 navLinks.classList.remove('active');
                 body.style.overflow = '';
             });
-        });
-
-        // Skills section interactivity
-        document.addEventListener('DOMContentLoaded', () => {
-            const skillCategories = document.querySelectorAll('.skill-category');
-            
-            // Initialize skill progress bars
-            function initializeSkillBars() {
-                const skillItems = document.querySelectorAll('.skill-item');
-                skillItems.forEach(item => {
-                    const level = item.dataset.level;
-                    const progressBar = item.querySelector('.skill-progress');
-                    progressBar.style.width = '0%';
-                });
-            }
-
-            // Animate skill progress bars
-            function animateSkillBars(category) {
-                const skillItems = category.querySelectorAll('.skill-item');
-                skillItems.forEach(item => {
-                    const level = item.dataset.level;
-                    const progressBar = item.querySelector('.skill-progress');
-                    setTimeout(() => {
-                        progressBar.style.width = `${level}%`;
-                    }, 200);
-                });
-            }
-
-            // Handle category click
-            skillCategories.forEach(category => {
-                const header = category.querySelector('.category-header');
-                header.addEventListener('click', () => {
-                    const isActive = category.classList.contains('active');
-                    
-                    // Close all categories first
-                    skillCategories.forEach(cat => {
-                        cat.classList.remove('active');
-                        const items = cat.querySelectorAll('.skill-item');
-                        items.forEach(item => {
-                            const progressBar = item.querySelector('.skill-progress');
-                            progressBar.style.width = '0%';
-                        });
-                    });
-                    
-                    // Toggle clicked category
-                    if (!isActive) {
-                        category.classList.add('active');
-                        animateSkillBars(category);
-                        
-                        // Smooth scroll to category on mobile
-                        if (window.innerWidth <= 768) {
-                            const headerOffset = header.offsetTop;
-                            window.scrollTo({
-                                top: headerOffset - 20,
-                                behavior: 'smooth'
-                            });
-                        }
-                    }
-                });
-            });
-
-            // Initialize
-            initializeSkillBars();
-            
-            // Open first category by default
-            if (skillCategories.length > 0) {
-                skillCategories[0].classList.add('active');
-                animateSkillBars(skillCategories[0]);
-            }
-            
-            // Handle intersection observer for animation
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const activeCategory = document.querySelector('.skill-category.active');
-                        if (activeCategory) {
-                            animateSkillBars(activeCategory);
-                        }
-                    }
-                });
-            }, { threshold: 0.2 });
-
-            // Observe the skills container
-            const skillsContainer = document.querySelector('.skills-container');
-            if (skillsContainer) {
-                observer.observe(skillsContainer);
-            }
         });
     </script>
 </body>
