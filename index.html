@@ -921,6 +921,51 @@
                 padding: 3px 6px;
             }
         }
+
+        /* Go Up Button */
+        .go-up-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 99;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .go-up-btn.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+        }
+
+        .go-up-btn:hover {
+            background-color: var(--accent);
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(97, 218, 251, 0.4);
+        }
+
+        /* Adjust button size on mobile */
+        @media (max-width: 768px) {
+            .go-up-btn {
+                width: 40px;
+                height: 40px;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
         
         /* Responsive */
         @media (max-width: 991px) {
@@ -2571,6 +2616,43 @@
                 !skillsContainer.contains(event.target)) {
                 resetNodes();
             }
+        });
+    </script>
+    <button id="goUpBtn" class="go-up-btn" aria-label="Go to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    <script>
+        // Go Up Button functionality
+        const goUpBtn = document.getElementById('goUpBtn');
+
+        // Show/hide button based on scroll position
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                goUpBtn.classList.add('visible');
+            } else {
+                goUpBtn.classList.remove('visible');
+            }
+        });
+
+        // Scroll to top when button is clicked
+        goUpBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Add touch support for mobile
+        goUpBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault(); // Prevent default touch behavior
+        });
+
+        goUpBtn.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         });
     </script>
 </body>
