@@ -269,10 +269,6 @@
             position: relative;
             overflow: hidden;
             z-index: 1;
-            font-size: 1rem; /* Match the font size of other buttons */
-            text-align: center;
-            width: auto;
-            min-width: 160px; /* Ensure consistent width with other buttons */
         }
         
         .download-resume-btn:hover {
@@ -1274,7 +1270,7 @@
                 <div class="hero-buttons">
                 <a href="#contact" class="cta-btn">Get in Touch</a>
                 <a href="#projects" class="cta-btn-secondary">View Projects</a>
-                <button class="download-resume-btn" id="downloadResumeBtn">Download Resume</button>
+                <a href="#" class="download-resume-btn" id="downloadResumeBtn">Download Resume</a>
                 </div>
             </div>
         </div>
@@ -2193,122 +2189,129 @@
         
         let selectedResumeType = null;
         
-        // Function to open modal with iOS support
-        function openModal() {
-            console.log('Opening modal...'); // Debug log
-            resumeModal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            
-            // Force a reflow to ensure the modal is visible
-            resumeModal.offsetHeight;
-            
-            // Add animation for modal elements
-            requestAnimationFrame(() => {
-                resumeModal.querySelector('.modal-content').style.transform = 'scale(1)';
-                resumeModal.querySelector('.modal-content').style.opacity = '1';
+        // Add both click and touchend events for better mobile support
+        ['click', 'touchend'].forEach(eventType => {
+            downloadResumeBtn.addEventListener(eventType, (e) => {
+                e.preventDefault();
+                e.stopPropagation(); // Prevent event bubbling
+                resumeModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                
+                // Add animation for modal elements
+                setTimeout(() => {
+                    resumeModal.querySelector('.modal-content').style.transform = 'scale(1)';
+                    resumeModal.querySelector('.modal-content').style.opacity = '1';
+                }, 10);
             });
-        }
+        });
 
-        // Function to close modal
+        // Prevent default touchstart behavior
+        downloadResumeBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+        });
+
+        modalClose.addEventListener('click', () => {
+            closeModal();
+        });
+
+        // Close modal if clicked/touched outside
+        ['click', 'touchend'].forEach(eventType => {
+            resumeModal.addEventListener(eventType, (e) => {
+                if (e.target === resumeModal) {
+                    closeModal();
+                }
+            });
+        });
+
         function closeModal() {
-            console.log('Closing modal...'); // Debug log
             resumeModal.querySelector('.modal-content').style.transform = 'scale(0.8)';
             resumeModal.querySelector('.modal-content').style.opacity = '0';
             
             setTimeout(() => {
                 resumeModal.classList.remove('active');
-                document.body.style.overflow = '';
+                document.body.style.overflow = 'auto';
             }, 300);
         }
 
-        // Handle button click/tap with multiple event types for better iOS support
-        downloadResumeBtn.addEventListener('click', handleModalOpen, { passive: false });
-        downloadResumeBtn.addEventListener('touchend', handleModalOpen, { passive: false });
-        downloadResumeBtn.addEventListener('touchstart', (e) => {
-            e.preventDefault(); // Prevent default touch behavior
-            console.log('Touch start detected'); // Debug log
-        }, { passive: false });
-
-        function handleModalOpen(e) {
-            console.log('Modal open event triggered'); // Debug log
-            e.preventDefault();
-            e.stopPropagation();
-            openModal();
-        }
-
-        // Close button handling
-        modalClose.addEventListener('click', closeModal);
-        modalClose.addEventListener('touchend', closeModal);
-
-        // Close modal when clicking/touching outside
-        resumeModal.addEventListener('click', (e) => {
-            if (e.target === resumeModal) {
-                closeModal();
-            }
-        });
-
-        resumeModal.addEventListener('touchend', (e) => {
-            if (e.target === resumeModal) {
-                closeModal();
-            }
-        });
-
-        // Handle resume option selection
+        // Handle resume option selection with touch support
         resumeOptions.forEach(option => {
-            // Click handler
-            option.addEventListener('click', handleOptionSelect);
-            // Touch handler
-            option.addEventListener('touchend', handleOptionSelect);
-            // Prevent default touch behavior
+            ['click', 'touchend'].forEach(eventType => {
+                option.addEventListener(eventType, (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    // Remove active class from all options
+                    resumeOptions.forEach(opt => opt.classList.remove('active'));
+                    
+                    // Add active class to clicked/touched option
+                    option.classList.add('active');
+                    
+                    // Enable download button
+                    finalDownloadBtn.removeAttribute('disabled');
+                    
+                    // Set selected resume type
+                    selectedResumeType = option.getAttribute('data-type');
+                    
+                    // Add interactive effect
+                    option.style.transform = 'translateY(-5px) rotateX(5deg)';
+                    setTimeout(() => {
+                        option.style.transform = 'translateY(-5px)';
+                    }, 200);
+                });
+            });
+            
+            // Prevent default touchstart behavior
             option.addEventListener('touchstart', (e) => {
                 e.preventDefault();
-            }, { passive: false });
+            });
+            
+            // Add hover effect for non-touch devices
+            if (!('ontouchstart' in window)) {
+                option.addEventListener('mousemove', (e) => {
+                    if (option.classList.contains('active')) return;
+                    
+                    const rect = option.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    const rotateX = (y - centerY) / 10;
+                    const rotateY = (centerX - x) / 10;
+                    
+                    option.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(10px)`;
+                });
+                
+                option.addEventListener('mouseleave', () => {
+                    if (!option.classList.contains('active')) {
+                        option.style.transform = 'none';
+                    }
+                });
+            }
         });
 
-        function handleOptionSelect(e) {
-            console.log('Option selected'); // Debug log
-            e.preventDefault();
-            e.stopPropagation();
-            
-            // Remove active class from all options
-            resumeOptions.forEach(opt => opt.classList.remove('active'));
-            
-            // Add active class to selected option
-            this.classList.add('active');
-            
-            // Enable download button
-            finalDownloadBtn.removeAttribute('disabled');
-            
-            // Set selected resume type
-            selectedResumeType = this.getAttribute('data-type');
-        }
+        // Handle final download button click with touch support
+        ['click', 'touchend'].forEach(eventType => {
+            finalDownloadBtn.addEventListener(eventType, (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                if (selectedResumeType === 'data') {
+                    window.location.href = 'https://drive.google.com/uc?export=download&id=1LPRGQm_pWOrQCACY9jeOtqUSQMSyQOCj';
+                } else if (selectedResumeType === 'ai') {
+                    window.location.href = 'https://drive.google.com/uc?export=download&id=1BjPJY_jsqv2HiIjkjgF7vQg5xfLZGrns';
+                }
+                
+                // Close modal after download starts
+                setTimeout(closeModal, 500);
+            });
+        });
 
-        // Handle final download
-        finalDownloadBtn.addEventListener('click', handleDownload);
-        finalDownloadBtn.addEventListener('touchend', handleDownload);
+        // Prevent default touchstart behavior
         finalDownloadBtn.addEventListener('touchstart', (e) => {
             e.preventDefault();
-        }, { passive: false });
-
-        function handleDownload(e) {
-            console.log('Download initiated'); // Debug log
-            e.preventDefault();
-            e.stopPropagation();
-            
-            if (selectedResumeType === 'data') {
-                window.location.href = 'https://drive.google.com/uc?export=download&id=1LPRGQm_pWOrQCACY9jeOtqUSQMSyQOCj';
-            } else if (selectedResumeType === 'ai') {
-                window.location.href = 'https://drive.google.com/uc?export=download&id=1BjPJY_jsqv2HiIjkjgF7vQg5xfLZGrns';
-            }
-            
-            setTimeout(closeModal, 500);
-        }
-
-        // Add iOS-specific meta tag for better touch handling
-        const metaViewport = document.querySelector('meta[name="viewport"]');
-        if (metaViewport) {
-            metaViewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
-        }
+        });
 
         // Mobile-specific camera adjustments
         function updateCameraForMobile() {
