@@ -2189,10 +2189,9 @@
         
         let selectedResumeType = null;
         
-        // Improved touch and click handling for the download button
-        function openResumeModal(e) {
+        // Simple click handler for the download button
+        downloadResumeBtn.onclick = function(e) {
             e.preventDefault();
-            e.stopPropagation();
             resumeModal.classList.add('active');
             document.body.style.overflow = 'hidden';
             
@@ -2201,33 +2200,19 @@
                 resumeModal.querySelector('.modal-content').style.transform = 'scale(1)';
                 resumeModal.querySelector('.modal-content').style.opacity = '1';
             }, 10);
-        }
+        };
 
-        // Add both click and touchstart events
-        downloadResumeBtn.addEventListener('click', openResumeModal);
-        downloadResumeBtn.addEventListener('touchstart', openResumeModal);
-
-        // Prevent default touch behavior
-        downloadResumeBtn.addEventListener('touchmove', (e) => {
-            e.preventDefault();
-        });
-
-        modalClose.addEventListener('click', () => {
+        // Simple click handler for closing the modal
+        modalClose.onclick = function() {
             closeModal();
-        });
+        };
 
-        // Close modal if clicked/touched outside
-        resumeModal.addEventListener('click', (e) => {
+        // Close modal when clicking outside
+        resumeModal.onclick = function(e) {
             if (e.target === resumeModal) {
                 closeModal();
             }
-        });
-
-        resumeModal.addEventListener('touchstart', (e) => {
-            if (e.target === resumeModal) {
-                closeModal();
-            }
-        });
+        };
 
         function closeModal() {
             resumeModal.querySelector('.modal-content').style.transform = 'scale(0.8)';
@@ -2239,16 +2224,15 @@
             }, 300);
         }
 
-        // Handle resume option selection with improved touch support
+        // Simple click handlers for resume options
         resumeOptions.forEach(option => {
-            function handleOptionSelect(e) {
+            option.onclick = function(e) {
                 e.preventDefault();
-                e.stopPropagation();
                 
                 // Remove active class from all options
                 resumeOptions.forEach(opt => opt.classList.remove('active'));
                 
-                // Add active class to selected option
+                // Add active class to clicked option
                 option.classList.add('active');
                 
                 // Enable download button
@@ -2256,28 +2240,12 @@
                 
                 // Set selected resume type
                 selectedResumeType = option.getAttribute('data-type');
-                
-                // Add interactive effect
-                option.style.transform = 'translateY(-5px) rotateX(5deg)';
-                setTimeout(() => {
-                    option.style.transform = 'translateY(-5px)';
-                }, 200);
-            }
-
-            // Add both click and touchstart events
-            option.addEventListener('click', handleOptionSelect);
-            option.addEventListener('touchstart', handleOptionSelect);
-
-            // Prevent default touch behavior
-            option.addEventListener('touchmove', (e) => {
-                e.preventDefault();
-            });
+            };
         });
 
-        // Handle final download button with improved touch support
-        function handleFinalDownload(e) {
+        // Simple click handler for final download
+        finalDownloadBtn.onclick = function(e) {
             e.preventDefault();
-            e.stopPropagation();
             
             if (selectedResumeType === 'data') {
                 window.location.href = 'https://drive.google.com/uc?export=download&id=1LPRGQm_pWOrQCACY9jeOtqUSQMSyQOCj';
@@ -2287,16 +2255,7 @@
             
             // Close modal after download starts
             setTimeout(closeModal, 500);
-        }
-
-        // Add both click and touchstart events
-        finalDownloadBtn.addEventListener('click', handleFinalDownload);
-        finalDownloadBtn.addEventListener('touchstart', handleFinalDownload);
-
-        // Prevent default touch behavior
-        finalDownloadBtn.addEventListener('touchmove', (e) => {
-            e.preventDefault();
-        });
+        };
 
         // Mobile-specific camera adjustments
         function updateCameraForMobile() {
