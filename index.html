@@ -2205,9 +2205,16 @@
             });
         });
 
-        // Prevent default touchstart behavior
-        downloadResumeBtn.addEventListener('touchstart', (e) => {
+        downloadResumeBtn.addEventListener('click', (e) => {
             e.preventDefault();
+            e.stopPropagation();
+            resumeModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        
+            setTimeout(() => {
+                resumeModal.querySelector('.modal-content').style.transform = 'scale(1)';
+                resumeModal.querySelector('.modal-content').style.opacity = '1';
+            }, 10);
         });
 
         modalClose.addEventListener('click', () => {
