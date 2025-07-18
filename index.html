@@ -786,8 +786,7 @@
         }
         
         .resume-options {
-            /* display: center;*/
-            display: center;
+            display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1.5rem;
             margin-top: 1.5rem;
@@ -1266,12 +1265,12 @@
         <div class="container">
             <div class="hero-content">
                 <h1 class="hero-name">Eugene Paulia</h1>
-                <p class="hero-title">Data Scientist | ML / AI Specialist</p>
+                <p class="hero-title">Data Scientist | Data Engineer | ML / AI Specialist</p>
                 <p class="hero-desc">Data scientist and engineer building the infrastructure that powers AI innovation. I specialize in creating scalable data architectures that transform raw information into actionable intelligence, with particular expertise in the intersection of data engineering and ML/AI</p>
                 <div class="hero-buttons">
                 <a href="#contact" class="cta-btn">Get in Touch</a>
                 <a href="#projects" class="cta-btn-secondary">View Projects</a>
-                <a href="javascript:void(0);" class="download-resume-btn" id="downloadResumeBtn" target="_self">Download Resume</a>
+                <a href="#" class="download-resume-btn" id="downloadResumeBtn">Download Resume</a>
                 </div>
             </div>
         </div>
@@ -1322,10 +1321,10 @@
                         <div class="timeline-date">Sep 2023 - Present</div>
                         <div class="timeline-company">Cenovus Energy</div>
                         <ul class="timeline-achievements">
-                            <li>Developed and deployed a time-series Forecasting + Anomaly Detection model in Databricks Notebooks, enabling real-time forecasting of price fluctuations and improving predictive maintenance workflows. Reduced maintenance costs by 11%.</li>
-                            <li>Containerized a Selenium - pandas/NumPy - Delta pipeline with Docker + GitLab CI/CD for scheduled, versioned data ingestion</li>
-                            <li>Developed versioned PySpark/Spark SQL pipelines in Azure Databricks Workflows (branching, alerts, retries) for production-grade data analytics pipelines</li>
-                            <li>Built a hybrid NLP (NLTK, SpaCy) + LLM (LangChain, Pydantic) pipeline in Azure Databricks to classify employee feedback and outline recurring investment requests</li>
+                            <li>Developed and deployed an ARIMA-based anomaly detection model in Databricks Notebooks, enabling real-time forecasting of price fluctuations and improving predictive maintenance workflows. Reduced maintenance costs by 11%.</li>
+                            <li>Designed, containerized, and orchestrated end-to-end data pipelines in GitLab CI/CD, leveraging Dockerized applications to automate job scheduling and deployment of machine learning workflows</li>
+                            <li>Optimized Databricks compute cluster configurations, reducing processing costs while ensuring scalability for large-scale analytics</li>
+                            <li>Fine-tuned NLP models using BERT, RoBERTa, and sentiment analysis techniques, improving classification accuracy from 40% to ~90%</li>
                         </ul>
                     </div>
                 </div>
@@ -1335,7 +1334,8 @@
                         <div class="timeline-date">Aug 2023 - Present</div>
                         <div class="timeline-company">GroupLabs Inc.</div>
                         <ul class="timeline-achievements">
-                            <li>Developed and optimized prompt strategies for LLM wrappers / RAG (OpenAI, Anthropic, Groq), iterating on embeddings, vector storage and search, temperature, max-tokens, and system-vs-user-prompt designs to achieve target outputs</li>
+                            <li>Built LLM-based text processing pipelines leveraging tokenization, lemmatization, and entity recognition for various NLP tasks, including semantic analysis and binary classification</li>
+                            <li>Architected LangChain-based embedding and LLM wrapper systems, optimizing text segmentation for downstream AI applications</li>
                             <li>Engineered vector storage and hybrid search systems using Pinecone and FAISS, enhancing semantic and keyword-based retrieval performance</li>
                             <li>Developed Kubernetes-based distributed ML training environments, scaling model training across multi-GPU nodes</li>
                             <li>Led a project with Hotchkiss Brain Institute, building and evaluating model architectures (LSTM, GRU, Random Forest) on hyperspectral imaging data, achieving 98% classification accuracy</li>
@@ -1349,10 +1349,10 @@
                         <div class="timeline-company">Suncor Energy</div>
                         <ul class="timeline-achievements">
                             <li>Optimized large-scale data pipelines, processing 10GB+ of daily operational data using Python (pandas, NumPy), enabling real-time analytics across 1M+ records</li>
-                            <li>Built SQL workflows in SSMS - wrote queries for data extraction, aggregation, filtering, and wrangling to feed downstream analytics, cutting manual prep time by 5+ hrs/week</li>
+                            <li>Designed and deployed high-performance web scraping bots with Selenium, incorporating parallel processing and asynchronous task execution, reducing data collection latency</li>
                             <li>Developed and deployed Flask APIs and Streamlit dashboards for an LLM wrapper, enabling interactive AI-driven insights for internal analytics teams</li>
-                            <li>Created Python scripts using pyODBC to run parameterized T-SQL queries and loaded results into pandas for further analytics</li>
-                            <li>Developed and deployed RESTful APIs for predictive analytics solutions, integrating Azure Web Apps, ACR/JFrog, and PowerApps to proactively enhance site safety metrics</li>
+                            <li>Enhanced organizational efficiency by implementing automated ML workflows in Azure Machine Learning Studio and Databricks, reducing manual intervention by 5+ hours per week</li>
+                            <li>Developed and deployed RESTful APIs for predictive analytics solutions, integrating Azure Web Apps and PowerApps to proactively enhance site safety metrics</li>
                         </ul>
                     </div>
                 </div>
@@ -1405,7 +1405,7 @@
         <div class="container">
             <h2>Featured Projects</h2>
             <div class="projects-grid">
-                <!-- <div class="project-card">
+                <div class="project-card">
                     <div class="project-content">
                         <h3 class="project-title">ARIMA-based Anomaly Detection System</h3>
                         <div class="project-tags">
@@ -1416,29 +1416,17 @@
                         <p class="project-description">Developed a real-time anomaly detection system for equipment monitoring using ARIMA models, reducing maintenance costs by 11% through predictive maintenance workflows.</p>
                         <a href="blog/anomaly-detection-system.html" class="read-more-btn">Read More</a>
                     </div>
-                </div> -->
-                <div class="project-card">
-                    <div class="project-content">
-                        <h3 class="project-title">Intelligent Document Processing</h3>
-                        <div class="project-tags">
-                            <span class="project-tag">Hugging Face</span>
-                            <span class="project-tag">OCR</span>
-                            <span class="project-tag">Cenovus</span>
-                        </div>
-                        <p class="project-description">A pipeline that uses computer vision and Hugging Face models to detect tables in PDF invoices and convert their contents into structured, analysis-ready data.</p>
-                        <a href="blog/intelligent-document-processing.html" class="read-more-btn">Read More</a>
-                    </div>
                 </div>
                 <div class="project-card">
                     <div class="project-content">
-                        <h3 class="project-title">PDF AI Agent</h3>
+                        <h3 class="project-title">Impact of Data Quality on ML</h3>
                         <div class="project-tags">
-                            <span class="project-tag">LLMs</span>
-                            <span class="project-tag">OCR</span>
-                            <span class="project-tag">GroupLabs</span>
+                            <span class="project-tag">Machine Learning</span>
+                            <span class="project-tag">Data Quality</span>
+                            <span class="project-tag">UntappedEnergy</span>
                         </div>
-                        <p class="project-description">A document analysis pipeline using LLMs, OCR. Features include text extraction from scanned PDFs, document type detection, metadata extraction, and multi-style summarization. Built with Groq LPUs for faster inference and cost reduction.</p>
-                        <a href="blog/pdf-ai-agent.html" class="read-more-btn">Read More</a>
+                        <p class="project-description">Demonstrating how strategic data preprocessing can improve ML model accuracy by 27.5%. Case study using housing price prediction with comprehensive preprocessing pipeline.</p>
+                        <a href="blog/data-quality-ml-impact.html" class="read-more-btn">Read More</a>
                     </div>
                 </div>
                 <div class="project-card">
@@ -1515,14 +1503,14 @@
             <div class="resume-options">
                 <div class="resume-option" data-type="data">
                     <i class="fas fa-database"></i>
-                    <h4>Data Science / ML Engineer</h4>
-                    <p>Data scientist specializing in machine learning, and AI-driven solutions</p>
+                    <h4>Data Engineer</h4>
+                    <p>Focused on data pipelines, ETL processes, and data architecture.</p>
                 </div>
-                <!-- <div class="resume-option" data-type="ai">
+                <div class="resume-option" data-type="ai">
                     <i class="fas fa-brain"></i>
                     <h4>AI Engineer</h4>
                     <p>Specialized in machine learning, deep learning, and AI solutions.</p>
-                </div> -->
+                </div>
             </div>
             
             <button class="download-btn" id="finalDownloadBtn" disabled>Download Selected Resume</button>
@@ -2217,16 +2205,9 @@
             });
         });
 
-        downloadResumeBtn.addEventListener('click', (e) => {
+        // Prevent default touchstart behavior
+        downloadResumeBtn.addEventListener('touchstart', (e) => {
             e.preventDefault();
-            e.stopPropagation();
-            resumeModal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        
-            setTimeout(() => {
-                resumeModal.querySelector('.modal-content').style.transform = 'scale(1)';
-                resumeModal.querySelector('.modal-content').style.opacity = '1';
-            }, 10);
         });
 
         modalClose.addEventListener('click', () => {
@@ -2317,7 +2298,7 @@
                 e.stopPropagation();
                 
                 if (selectedResumeType === 'data') {
-                    window.location.href = 'https://drive.google.com/uc?export=download&id=1N1kI9pM7fsjf1KIhRDbKqzq_d831PG7J';
+                    window.location.href = 'https://drive.google.com/uc?export=download&id=1LPRGQm_pWOrQCACY9jeOtqUSQMSyQOCj';
                 } else if (selectedResumeType === 'ai') {
                     window.location.href = 'https://drive.google.com/uc?export=download&id=1BjPJY_jsqv2HiIjkjgF7vQg5xfLZGrns';
                 }
