@@ -19,7 +19,7 @@
     <title>Eugene Paulia | Data Scientist & ML Engineer</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
-    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="icon" type="image/png" href="logos/favicon.png">
     <style>
         /* Base Styles */
         :root {
@@ -360,35 +360,31 @@
         }
         
         /* Experience Section */
-        .timeline {
+        .vertical-timeline {
             position: relative;
             max-width: 1200px;
             margin: 0 auto;
-            padding-top: 20px;
-            padding-bottom: 20px;
+            padding: 2rem 0;
         }
         
-        .timeline::after {
-            content: '';
+        .timeline-line {
             position: absolute;
-            width: 4px;
-            background-color: var(--secondary);
+            left: 200px;
             top: 0;
             bottom: 0;
-            left: 50%;
-            margin-left: -2px;
-            border-radius: 2px;
-            z-index: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--accent), var(--secondary));
+            z-index: 1;
         }
         
         .timeline-item {
-            padding: 15px 40px;
             position: relative;
-            width: 50%;
+            display: flex;
+            margin-bottom: 4rem;
+            z-index: 2;
             opacity: 0;
             transform: translateY(70px);
             transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            margin-bottom: 30px;
         }
         
         .timeline-item.visible {
@@ -396,53 +392,68 @@
             transform: translateY(0);
         }
         
-        .timeline-item:nth-child(odd) {
-            left: 0;
+        .timeline-marker {
+            position: relative;
+            width: 200px;
+            padding-right: 2rem;
+            text-align: right;
         }
         
-        .timeline-item:nth-child(even) {
-            left: 50%;
+        .timeline-dot {
+            position: absolute;
+            right: -10px;
+            top: 20px;
+            width: 16px;
+            height: 16px;
+            background-color: var(--accent);
+            border: 4px solid white;
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px rgba(97, 218, 251, 0.2);
+            z-index: 3;
+        }
+        
+        .timeline-logo {
+            margin-top: 50px;
+            margin-bottom: 1rem;
+        }
+        
+        .timeline-logo img {
+            max-width: 80px;
+            max-height: 60px;
+            object-fit: contain;
+            filter: grayscale(30%);
+            transition: filter 0.3s ease;
+        }
+        
+        .timeline-item:hover .timeline-logo img {
+            filter: grayscale(0%);
+        }
+        
+        .timeline-year {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
         }
         
         .timeline-content {
-            padding: 20px 30px;
+            flex: 1;
+            padding: 2rem;
             background-color: white;
-            position: relative;
             border-radius: 10px;
-            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-left: 2rem;
             border-left: 4px solid var(--accent);
-        }
-        
-        .timeline-item:nth-child(odd) .timeline-content {
-            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .timeline-item:nth-child(even) .timeline-content {
-            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
         }
         
         .timeline-content:hover {
             transform: translateY(-5px);
-        }
-        
-        .timeline-item:nth-child(odd) .timeline-content:hover {
-            box-shadow: 5px 0 25px rgba(0, 0, 0, 0.15);
-        }
-        
-        .timeline-item:nth-child(even) .timeline-content:hover {
-            box-shadow: -5px 0 25px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
         
         .timeline-content.highlighted {
             box-shadow: 0 0 30px rgba(97, 218, 251, 0.3);
-        }
-        
-        .timeline-item:nth-child(odd) .timeline-content.highlighted {
-            box-shadow: 5px 0 30px rgba(97, 218, 251, 0.3);
-        }
-        
-        .timeline-item:nth-child(even) .timeline-content.highlighted {
-            box-shadow: -5px 0 30px rgba(97, 218, 251, 0.3);
         }
         
         .timeline-content h3 {
@@ -477,6 +488,62 @@
             position: absolute;
             left: 0;
             color: var(--accent);
+        }
+        
+        .timeline-story {
+            margin-top: 1rem;
+            color: var(--text-light);
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+        
+        .timeline-story:first-of-type {
+            margin-top: 1.5rem;
+        }
+        
+        /* Responsive Design for Vertical Timeline */
+        @media (max-width: 768px) {
+            .vertical-timeline {
+                max-width: 100%;
+                padding: 1rem;
+            }
+            
+            .timeline-line {
+                left: 80px;
+            }
+            
+            .timeline-item {
+                flex-direction: column;
+                margin-bottom: 3rem;
+            }
+            
+            .timeline-marker {
+                width: 100%;
+                padding-right: 0;
+                margin-bottom: 1rem;
+                text-align: center;
+            }
+            
+            .timeline-dot {
+                right: auto;
+                left: 80px;
+                top: 10px;
+            }
+            
+            .timeline-logo {
+                margin-top: 30px;
+                margin-bottom: 0.5rem;
+            }
+            
+            .timeline-logo img {
+                max-width: 60px;
+                max-height: 45px;
+            }
+            
+            .timeline-content {
+                margin-left: 0;
+                padding: 1.5rem;
+            }
         }
         
         /* Animated circle that follows viewport */
@@ -1304,7 +1371,7 @@
                     </div>
                 </div>
                 <div class="about-image">
-                    <img src="your-avatar.png" alt="My Avatar" />
+                    <img src="logos/your-avatar.png" alt="My Avatar" />
                 </div>
             </div>
         </div>
@@ -1314,46 +1381,60 @@
     <section id="experience">
         <div class="container">
             <h2>Professional Experience</h2>
-            <div class="timeline">
+            <div class="vertical-timeline">
+                <div class="timeline-line"></div>
+                
                 <div class="timeline-item">
+                    <div class="timeline-marker">
+                        <div class="timeline-logo">
+                            <img src="logos/CVE_BIG-4ad3a7b3.png" alt="Cenovus Energy" />
+                        </div>
+                        <div class="timeline-year">2023 - Present</div>
+                        <div class="timeline-dot"></div>
+                    </div>
                     <div class="timeline-content">
                         <h3>Data Scientist</h3>
                         <div class="timeline-date">Sep 2023 - Present</div>
                         <div class="timeline-company">Cenovus Energy</div>
-                        <ul class="timeline-achievements">
-                            <li>Combined SARIMA baseline for time-series commodity price forecasting with lag/rolling/calendar features in an XGBRegressor, cutting RMSE/MAE by 15% and 12% respectively.</li>
-                            <li>Containerized a Selenium - pandas/NumPy - Delta pipeline with Docker + GitLab CI/CD for scheduled, versioned data ingestion</li>
-                            <li>Developed versioned PySpark/Spark SQL Medallion pipelines in Azure Databricks Workflows (branching, alerts, retries) for production-grade data analytics pipelines</li>
-                            <li>Built a hybrid NLP (NLTK, SpaCy) + LLM (LangChain, Pydantic) pipeline in Azure Databricks to classify employee feedback and outline recurring investment requests</li>
-                        </ul>
+                        <p class="timeline-story"><strong>Role Summary:</strong> I work on data science initiatives at Cenovus Energy, focusing on predictive analytics and operational intelligence for energy operations.</p>
+                        <p class="timeline-story"><strong>Scope & Responsibilities:</strong> I develop time-series forecasting models, build scalable data pipelines using Azure Databricks and PySpark, and create hybrid NLP/LLM systems for employee feedback analysis and investment decision support. I containerize data ingestion pipelines with Docker and implement GitLab CI/CD workflows to ensure versioned and automated data processing.</p>
+                        <p class="timeline-story"><strong>Impact & Purpose:</strong> The goal is to support energy operations through AI-driven insights, enabling data-informed decisions that help optimize pricing strategies and enhance operational efficiency within our energy infrastructure.</p>
                     </div>
                 </div>
+                
                 <div class="timeline-item">
+                    <div class="timeline-marker">
+                        <div class="timeline-logo">
+                            <img src="logos/GroupLabs_Logo_Black.png" alt="GroupLabs Inc." />
+                        </div>
+                        <div class="timeline-year">2023 - Present</div>
+                        <div class="timeline-dot"></div>
+                    </div>
                     <div class="timeline-content">
                         <h3>Machine Learning Engineer</h3>
                         <div class="timeline-date">Aug 2023 - Present</div>
                         <div class="timeline-company">GroupLabs Inc.</div>
-                        <ul class="timeline-achievements">
-                            <li>Developed and optimized prompt strategies for LLM wrappers / RAG (OpenAI, Anthropic, Groq), iterating on embeddings, vector storage and search, temperature, max-tokens, and system-vs-user-prompt designs to achieve target outputs</li>
-                            <li>Engineered vector storage and hybrid search systems using Pinecone and FAISS, enhancing semantic and keyword-based retrieval performance</li>
-                            <li>Engineered vector storage and hybrid search systems using Pinecone and FAISS, enhancing semantic and keyword-based retrieval performance</li>
-                            <li>Developed Kubernetes-based distributed ML training environments, scaling model training across multi-GPU nodes</li>
-                            <li>Led a project with Hotchkiss Brain Institute, building and evaluating model architectures (LSTM, GRU, Random Forest) on hyperspectral imaging data, achieving 98% classification accuracy</li>
-                        </ul>
+                        <p class="timeline-story"><strong>Role Summary:</strong> I build AI solutions at GroupLabs, specializing in large language model optimization and machine learning model development.</p>
+                        <p class="timeline-story"><strong>Scope & Responsibilities:</strong> I build vector storage systems using Pinecone and FAISS, optimize prompt strategies across OpenAI, Anthropic, Groq, etc. models, and develop Kubernetes-based distributed ML training environments. My ML work spans forecasting and time-series analysis, regression and classification models, deep learning architectures, and collaborative research with academic and industry institutions.</p>
+                        <p class="timeline-story"><strong>Impact & Purpose:</strong> The goal is to help bridge the gap between academic AI research and practical industry applications, contributing to AI advancement while building scalable solutions for healthcare, research, and enterprise applications.</p>
                     </div>
                 </div>
+                
                 <div class="timeline-item">
+                    <div class="timeline-marker">
+                        <div class="timeline-logo">
+                            <img src="logos/SVG_Brand_suncor_energy.png" alt="Suncor Energy" />
+                        </div>
+                        <div class="timeline-year">2021 - 2023</div>
+                        <div class="timeline-dot"></div>
+                    </div>
                     <div class="timeline-content">
                         <h3>Data Scientist</h3>
                         <div class="timeline-date">Sep 2021 - May 2023</div>
                         <div class="timeline-company">Suncor Energy</div>
-                        <ul class="timeline-achievements">
-                            <li>Optimized large-scale data pipelines, processing 10GB+ of daily operational data using Python (pandas, NumPy), enabling real-time analytics across 1M+ records</li>
-                            <li>Built SQL workflows in SSMS - wrote queries for data extraction, aggregation, filtering, and wrangling to feed downstream analytics, cutting manual prep time by 5+ hrs/week</li>
-                            <li>Developed and deployed Flask APIs and Streamlit dashboards for an LLM wrapper, enabling interactive AI-driven insights for internal analytics teams</li>
-                            <li>Created Python scripts using pyODBC to run parameterized SQL queries and loaded results into pandas for further analytics</li>
-                            <li>Developed and deployed RESTful APIs for predictive analytics solutions, integrating Azure Web Apps, ACR/JFrog, and PowerApps to proactively enhance site safety metrics</li>
-                        </ul>
+                        <p class="timeline-story"><strong>Role Summary:</strong> I contributed to data science initiatives at Suncor Energy, building analytics platforms for industrial operations and safety monitoring.</p>
+                        <p class="timeline-story"><strong>Scope & Responsibilities:</strong> I developed enterprise-scale data pipelines for big data processing and ETL operations, created web APIs and interactive dashboards that delivered AI-driven business insights, and built RESTful services for predictive analytics. I optimized database workflows and query performance, and deployed cloud-based applications integrated with business intelligence platforms for real-time operational monitoring and analytics.</p>
+                        <p class="timeline-story"><strong>Impact & Purpose:</strong> The goal was to improve access to advanced analytics within our operations, enabling proactive safety enhancements and operational excellence through data-driven decision making in industrial environments.</p>
                     </div>
                 </div>
             </div>
@@ -1579,7 +1660,7 @@
         });
 
         // Timeline animation with staggered reveal
-        const timelineItems = document.querySelectorAll('.timeline-item');
+        const timelineItems = document.querySelectorAll('.vertical-timeline .timeline-item');
         
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry, index) => {
@@ -1602,7 +1683,7 @@
         document.body.appendChild(progressCircle);
 
         // Timeline progress tracking
-        const timeline = document.querySelector('.timeline');
+        const timeline = document.querySelector('.vertical-timeline');
         const timelineRect = timeline.getBoundingClientRect();
         
         function updateTimelineProgress() {
@@ -2496,7 +2577,7 @@
         
         // Load the avatar texture with error handling
         const avatarTexture = textureLoader.load(
-            'your-avatar.png', // Update the path to your image
+            'logos/your-avatar.png', // Update the path to your image
             function(texture) {
                 console.log('Avatar texture loaded successfully');
                 // Adjust UV coordinates if needed
