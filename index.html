@@ -397,12 +397,15 @@
             width: 200px;
             padding-right: 2rem;
             text-align: right;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
         }
         
         .timeline-dot {
             position: absolute;
             right: -10px;
-            top: 20px;
+            top: 13%;
             width: 16px;
             height: 16px;
             background-color: var(--accent);
@@ -413,8 +416,13 @@
         }
         
         .timeline-logo {
-            margin-top: 50px;
+            margin-top: 0;
             margin-bottom: 1rem;
+            text-align: right;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
         }
         
         .timeline-logo img {
@@ -434,6 +442,7 @@
             font-weight: 600;
             color: var(--primary);
             margin-bottom: 0.5rem;
+            text-align: right;
         }
         
         .timeline-content {
@@ -505,11 +514,11 @@
         @media (max-width: 768px) {
             .vertical-timeline {
                 max-width: 100%;
-                padding: 1rem;
+                padding: 0.25rem;
             }
             
             .timeline-line {
-                left: 80px;
+                left: 10px;
             }
             
             .timeline-item {
@@ -521,18 +530,22 @@
                 width: 100%;
                 padding-right: 0;
                 margin-bottom: 1rem;
-                text-align: center;
+                text-align: left;
+                padding-left: 0;
+                align-items: flex-start;
             }
             
             .timeline-dot {
-                right: auto;
-                left: 80px;
-                top: 10px;
+                left: -6.5%;
+                top: 50%;
+                transform: translateY(-50%);
             }
             
             .timeline-logo {
-                margin-top: 30px;
+                margin-top: 0;
                 margin-bottom: 0.5rem;
+                margin-left: 0;
+                text-align: left;
             }
             
             .timeline-logo img {
@@ -540,9 +553,17 @@
                 max-height: 45px;
             }
             
+            .timeline-year {
+                text-align: left;
+                margin-left: 0;
+            }
+            
             .timeline-content {
                 margin-left: 0;
                 padding: 1.5rem;
+                width: 100%;
+                max-width: none;
+                margin-right: 0;
             }
         }
         
@@ -1056,8 +1077,8 @@
             
             .timeline-item {
                 width: 100%;
-                padding-left: 70px;
-                padding-right: 25px;
+                padding-left: 20px;
+                padding-right: 2px;
             }
             
             .timeline-item:nth-child(even) {
@@ -1160,7 +1181,7 @@
             }
 
             .timeline-content {
-                padding: 15px;
+                padding: 10px;
             }
 
             .timeline-content h3 {
