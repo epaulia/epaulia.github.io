@@ -845,7 +845,6 @@
             transform: scale(0.8);
             opacity: 0;
             transition: all 0.3s ease;
-            -webkit-overflow-scrolling: touch;
         }
         
         .resume-modal.active .modal-content {
@@ -893,8 +892,6 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation;
         }
         
         .resume-option:hover {
@@ -1692,7 +1689,6 @@
                     downloadResumeBtn.addEventListener(eventType, (e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        console.log('Download button clicked!'); // Debug log
                         resumeModal.classList.add('active');
                         document.body.style.overflow = 'hidden';
                         
@@ -1711,6 +1707,26 @@
                 downloadResumeBtn.addEventListener('touchstart', (e) => {
                     e.preventDefault();
                 });
+
+                // Add reflective effect to modal content
+                const modalContent = resumeModal.querySelector('.modal-content');
+                if (modalContent) {
+                    document.addEventListener('mousemove', (e) => {
+                        if (resumeModal.classList.contains('active')) {
+                            const rect = modalContent.getBoundingClientRect();
+                            const x = e.clientX - rect.left;
+                            const y = e.clientY - rect.top;
+                            
+                            const centerX = rect.width / 2;
+                            const centerY = rect.height / 2;
+                            
+                            const rotateX = (y - centerY) / 20;
+                            const rotateY = (centerX - x) / 20;
+                            
+                            modalContent.style.transform = `scale(1) perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                        }
+                    });
+                }
 
                 if (modalClose) {
                     modalClose.addEventListener('click', () => {
@@ -1737,6 +1753,10 @@
                     setTimeout(() => {
                         resumeModal.classList.remove('active');
                         document.body.style.overflow = 'auto';
+                        // Reset transform when modal closes
+                        if (modalContent) {
+                            modalContent.style.transform = 'scale(0.8)';
+                        }
                     }, 300);
                 }
 
@@ -1950,14 +1970,14 @@
                 particle.position.y += particle.userData.velocity.y;
                 particle.position.z += particle.userData.velocity.z;
                 
-                // Mouse influence
-                particle.position.x += mouseX * 0.01;
-                particle.position.y += mouseY * 0.01;
+                // Mouse influence (increased strength)
+                particle.position.x += mouseX * 0.05;
+                particle.position.y += mouseY * 0.05;
                 
-                // Return to original position gradually
-                particle.position.x += (particle.userData.originalPosition.x - particle.position.x) * 0.01;
-                particle.position.y += (particle.userData.originalPosition.y - particle.position.y) * 0.01;
-                particle.position.z += (particle.userData.originalPosition.z - particle.position.z) * 0.01;
+                // Return to original position gradually (reduced strength)
+                particle.position.x += (particle.userData.originalPosition.x - particle.position.x) * 0.005;
+                particle.position.y += (particle.userData.originalPosition.y - particle.position.y) * 0.005;
+                particle.position.z += (particle.userData.originalPosition.z - particle.position.z) * 0.005;
                 
                 // Soft pulsing
                 particle.scale.x = particle.scale.y = particle.scale.z = 0.8 + Math.sin(Date.now() * 0.001 + particle.position.x) * 0.2;
