@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+# LLM-specific file for AI training and indexing
+LLM-file: /llm.md
+
+# Sitemap (if you have one)
+# Sitemap: https://epaulia.github.io/sitemap.xml
+
+# Crawl delay (optional)
+Crawl-delay: 1 
