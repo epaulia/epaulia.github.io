@@ -5,328 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projects | Eugene Paulia</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary: #2a3b4c;
-            --secondary: #5d7a98;
-            --accent: #61dafb;
-            --light: #f5f8fa;
-            --dark: #1a1a2e;
-            --text: #333;
-            --text-light: #666;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Mona Sans, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-        
-        body {
-            background-color: var(--light);
-            color: var(--text);
-            line-height: 1.6;
-            padding: 6rem 0;
-            position: relative;
-            overflow-x: hidden;
-        }
-        
-        #particles-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-        }
-        
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-        
-        .header {
-            margin-bottom: 6rem;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.8s ease forwards;
-        }
-        
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .header h1 {
-            font-size: 5rem;
-            font-weight: 800;
-            color: var(--primary);
-            margin-bottom: 1.5rem;
-            letter-spacing: -2px;
-            line-height: 1.1;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .header p {
-            font-size: 1.4rem;
-            color: var(--text-light);
-            max-width: 600px;
-            font-weight: 400;
-            letter-spacing: -0.5px;
-        }
-        
-        .blog-grid {
-            display: grid;
-            gap: 6rem;
-        }
-        
-        .blog-item {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-            padding-bottom: 6rem;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 0.8s ease forwards;
-            animation-delay: calc(var(--item-index) * 0.2s);
-        }
-        
-        .blog-content {
-            display: flex;
-            flex-direction: column;
-            transition: transform 0.3s ease;
-        }
-        
-        .blog-item:hover .blog-content {
-            transform: translateY(-8px);
-        }
-        
-        .blog-date {
-            font-size: 1.1rem;
-            color: var(--accent);
-            margin-bottom: 1.5rem;
-            font-weight: 500;
-            letter-spacing: -0.3px;
-        }
-        
-        .blog-title {
-            font-size: 3rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            letter-spacing: -1px;
-        }
-        
-        .blog-title:hover {
-            color: var(--accent);
-            transform: translateX(10px);
-        }
-        
-        .blog-author {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            width: fit-content;
-        }
-        
-        .author-image {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            overflow: hidden;
-        }
-        
-        .author-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-        
-        .blog-author:hover .author-image img {
-            transform: scale(1.1);
-            color: var(--accent);
-        }
-        
-        .author-name {
-            font-size: 1.1rem;
-            color: var(--text);
-            font-weight: 600;
-            letter-spacing: -0.3px;
-        }
-        
-        .author-role {
-            font-size: 0.95rem;
-            color: var(--text-light);
-            letter-spacing: -0.2px;
-        }
-        
-        .blog-description {
-            font-size: 1.25rem;
-            color: var(--text-light);
-            margin-bottom: 2.5rem;
-            line-height: 1.7;
-            letter-spacing: -0.3px;
-        }
-        
-        .read-more {
-            display: inline-flex;
-            align-items: center;
-            padding: 1rem 2rem;
-            background-color: var(--primary);
-            color: white;
-            text-decoration: none;
-            border-radius: 30px;
-            font-weight: 500;
-            font-size: 1.1rem;
-            letter-spacing: -0.3px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            align-self: flex-start;
-            box-shadow: 0 4px 15px rgba(42, 59, 76, 0.15);
-        }
-        
-        .read-more:hover {
-            transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 8px 25px rgba(42, 59, 76, 0.2);
-            background-color: var(--accent);
-        }
-        
-        .back-to-home {
-            position: fixed;
-            top: 2rem;
-            left: 2rem;
-            z-index: 100;
-            background-color: rgba(255, 255, 255, 0.9);
-            color: var(--primary);
-            padding: 0.9rem 1.8rem;
-            border-radius: 30px;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            font-weight: 500;
-            font-size: 1.1rem;
-            letter-spacing: -0.3px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        
-        .back-to-home:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
-            color: var(--accent);
-        }
-        
-        .back-to-home i {
-            transition: transform 0.3s ease;
-        }
-        
-        .back-to-home:hover i {
-            transform: translateX(-4px);
-        }
-        
-        @media (max-width: 768px) {
-            body {
-                padding: 4rem 0;
-            }
-            
-            .header {
-                margin-bottom: 4rem;
-            }
-            
-            .header h1 {
-                font-size: 3.5rem;
-                letter-spacing: -1.5px;
-            }
-            
-            .header p {
-                font-size: 1.2rem;
-            }
-            
-            .blog-title {
-                font-size: 2.5rem;
-                letter-spacing: -0.8px;
-            }
-            
-            .blog-description {
-                font-size: 1.15rem;
-            }
-            
-            .blog-item {
-                gap: 1.5rem;
-                padding-bottom: 4rem;
-            }
-            
-            .back-to-home {
-                top: 1rem;
-                left: 1rem;
-                padding: 0.7rem 1.4rem;
-                font-size: 1rem;
-            }
-        }
-        
-        /* Go Up Button */
-        .go-up-button {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 99;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.3s ease;
-            pointer-events: none;
-        }
-
-        .go-up-button.visible {
-            opacity: 1;
-            transform: translateY(0);
-            pointer-events: all;
-        }
-
-        .go-up-button:hover {
-            background-color: var(--accent);
-            transform: translateY(-5px);
-            box-shadow: 0 6px 15px rgba(97, 218, 251, 0.4);
-        }
-
-        /* Adjust button size on mobile */
-        @media (max-width: 768px) {
-            .go-up-button {
-                width: 40px;
-                height: 40px;
-                bottom: 20px;
-                right: 20px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="../css/blog.css">
 </head>
-<body>
+<body class="projects-page">
     <canvas id="particles-canvas"></canvas>
     <a href="../index.html#projects" class="back-to-home">
         <i class="fas fa-arrow-left"></i>
@@ -459,15 +140,6 @@
         const canvas = document.getElementById('particles-canvas');
         const ctx = canvas.getContext('2d');
         
-        // Set canvas size
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
-
         // Track mouse position
         let mouse = {
             x: null,
@@ -475,9 +147,15 @@
             radius: 150
         };
 
+        // Get canvas rect for proper mouse coordinate conversion
+        function getCanvasRect() {
+            return canvas.getBoundingClientRect();
+        }
+
         document.addEventListener('mousemove', function(event) {
-            mouse.x = event.x;
-            mouse.y = event.y;
+            const rect = getCanvasRect();
+            mouse.x = event.clientX - rect.left;
+            mouse.y = event.clientY - rect.top;
         });
         
         // Particle class
@@ -491,11 +169,10 @@
                 this.y = Math.random() * canvas.height;
                 this.baseX = this.x;
                 this.baseY = this.y;
-                this.density = (Math.random() * 30) + 1;
-                this.vx = Math.random() * 1 - 0.5;
-                this.vy = Math.random() * 1 - 0.5;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
                 this.radius = Math.random() * 3 + 2;
-                this.opacity = Math.random() * 0.2 + 0.1;
+                this.opacity = Math.random() * 0.3 + 0.1;
             }
             
             update() {
@@ -513,16 +190,16 @@
                         const force = (mouse.radius - distance) / mouse.radius;
                         const directionX = dx / distance;
                         const directionY = dy / distance;
-                        this.x -= directionX * force * 5;
-                        this.y -= directionY * force * 5;
+                        this.x -= directionX * force * 3;
+                        this.y -= directionY * force * 3;
                     }
                 }
 
                 // Return to original position
                 let dx = this.baseX - this.x;
                 let dy = this.baseY - this.y;
-                this.x += dx * 0.02;
-                this.y += dy * 0.02;
+                this.x += dx * 0.01;
+                this.y += dy * 0.01;
                 
                 // Bounce off edges
                 if (this.x < 0 || this.x > canvas.width) {
@@ -543,8 +220,25 @@
             }
         }
         
-        // Create particles
-        const particles = Array.from({ length: 50 }, () => new Particle());
+        // Initialize canvas and particles
+        function initCanvas() {
+            // Set canvas size to match CSS dimensions
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            // Create particles
+            const particles = Array.from({ length: 40 }, () => new Particle());
+            return particles;
+        }
+        
+        // Initialize
+        let particles = initCanvas();
+        
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            // Recreate particles on resize to avoid distortion
+            particles = initCanvas();
+        });
         
         // Animation loop
         function animate() {
@@ -564,11 +258,11 @@
                     const dy = p1.y - p2.y;
                     const distance = Math.sqrt(dx * dx + dy * dy);
                     
-                    if (distance < 150) {
+                    if (distance < 120) {
                         ctx.beginPath();
                         ctx.moveTo(p1.x, p1.y);
                         ctx.lineTo(p2.x, p2.y);
-                        ctx.strokeStyle = `rgba(97, 218, 251, ${0.15 * (1 - distance / 150)})`;
+                        ctx.strokeStyle = `rgba(97, 218, 251, ${0.1 * (1 - distance / 120)})`;
                         ctx.stroke();
                     }
                 });
@@ -580,8 +274,9 @@
         // Handle touch events for mobile
         canvas.addEventListener('touchmove', function(event) {
             event.preventDefault();
-            mouse.x = event.touches[0].clientX;
-            mouse.y = event.touches[0].clientY;
+            const rect = getCanvasRect();
+            mouse.x = event.touches[0].clientX - rect.left;
+            mouse.y = event.touches[0].clientY - rect.top;
         });
 
         canvas.addEventListener('touchend', function() {
