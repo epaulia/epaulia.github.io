@@ -553,7 +553,7 @@ tr:nth-child(even) {
 }
 
 .header {
-    margin-bottom: 6rem;
+    margin-bottom: 3rem;
     opacity: 0;
     transform: translateY(20px);
     animation: fadeInUp 0.8s ease forwards;
@@ -581,14 +581,14 @@ tr:nth-child(even) {
 
 .blog-grid {
     display: grid;
-    gap: 6rem;
+    gap: 3rem;
 }
 
 .blog-item {
     display: grid;
     grid-template-columns: 1fr;
     gap: 2rem;
-    padding-bottom: 6rem;
+    padding-bottom: 3rem;
     border-bottom: 1px solid rgba(0, 0, 0, 0.08);
     opacity: 0;
     transform: translateY(30px);
@@ -745,6 +745,18 @@ tr:nth-child(even) {
 
 /* Responsive adjustments for projects listing */
 @media (max-width: 768px) {
+    .header {
+        margin-bottom: 2rem;
+    }
+    
+    .blog-grid {
+        gap: 2rem;
+    }
+    
+    .blog-item {
+        padding-bottom: 2rem;
+    }
+    
     .header h1 {
         font-size: 3.5rem;
         letter-spacing: -1px;
