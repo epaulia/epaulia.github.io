@@ -55,6 +55,7 @@ body.projects-page {
     justify-content: center;
     overflow: hidden;
     background-color: var(--dark);
+    padding: 2rem 0;
 }
 
 /* Blog header canvas */
@@ -283,8 +284,13 @@ pre code {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    .blog-header {
+        min-height: 500px;
+        padding: 3rem 0;
+    }
+    
     .blog-title {
-        font-size: 2.8rem;
+        font-size: 2.2rem;
         letter-spacing: -0.5px;
     }
     
@@ -321,6 +327,23 @@ pre code {
         left: 1rem;
         padding: 0.7rem 1.4rem;
         font-size: 0.9rem;
+    }
+}
+
+/* Extra small mobile devices */
+@media (max-width: 480px) {
+    .blog-title {
+        font-size: 1.8rem;
+        letter-spacing: -0.3px;
+    }
+    
+    .blog-header {
+        min-height: 450px;
+        padding: 2rem 0;
+    }
+    
+    .header-content {
+        padding: 0 1rem;
     }
 }
 
